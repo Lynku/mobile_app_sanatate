@@ -3,28 +3,47 @@ import { createStaticNavigation, StaticParamList } from '@react-navigation/nativ
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Platform } from 'react-native';
 
-import { Explore } from './screens/Explore';
-import { Home } from './screens/Home';
-import { NotFound } from './screens/NotFound';
+import { MealsScreen } from './screens/MealsScreen';
+import { ProfileScreen } from './screens/ProfileScreen';
+import { ScannerScreen } from './screens/ScannerScreen';
+import { TrackerScreen } from './screens/TrackerScreen';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 
-const HomeTabs = createBottomTabNavigator({
+const AppTabs = createBottomTabNavigator({
   screens: {
-    Home: {
-      screen: Home,
+    Tracker: {
+      screen: TrackerScreen,
       options: {
+        title: 'Tracker',
         headerShown: false,
-        tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+        tabBarIcon: ({ color }) => <IconSymbol size={28} name="list.bullet" color={color} />,
       },
     },
-    Explore: {
-      screen: Explore,
+    Meals: {
+      screen: MealsScreen,
       options: {
+        title: 'Meals',
         headerShown: false,
-        tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+        tabBarIcon: ({ color }) => <IconSymbol size={28} name="fork.knife" color={color} />,
+      },
+    },
+    Scanner: {
+      screen: ScannerScreen,
+      options: {
+        title: 'Scanner',
+        headerShown: false,
+        tabBarIcon: ({ color }) => <IconSymbol size={28} name="barcode.viewfinder" color={color} />,
+      },
+    },
+    Profile: {
+      screen: ProfileScreen,
+      options: {
+        title: 'Profile',
+        headerShown: false,
+        tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
       },
     },
   },
@@ -35,7 +54,7 @@ const HomeTabs = createBottomTabNavigator({
     tabBarStyle: Platform.select({
       ios: {
         // Use a transparent background on iOS to show the blur effect
-        possition: 'absolute',
+        position: 'absolute',
       },
       default: {},
     }),
@@ -44,19 +63,10 @@ const HomeTabs = createBottomTabNavigator({
 
 const RootStack = createNativeStackNavigator({
   screens: {
-    HomeTabs: {
-      screen: HomeTabs,
+    AppTabs: {
+      screen: AppTabs,
       options: {
         headerShown: false,
-      },
-    },
-    NotFound: {
-      screen: NotFound,
-      options: {
-        title: '404',
-      },
-      linking: {
-        path: '*',
       },
     },
   },
