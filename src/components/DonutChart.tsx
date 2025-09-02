@@ -12,6 +12,7 @@ const DonutChart = ({ meals, burnedCalories, goalCalories }) => {
   let cumulativeCalories = 0;
 
   const consumedCalories = meals.reduce((total, meal) => total + meal.calories, 0);
+  const netCalories = consumedCalories - burnedCalories;
 
   return (
     <View style={[styles.chartContainer, { width: chartWidth, height: chartWidth }]}>
@@ -59,6 +60,8 @@ const DonutChart = ({ meals, burnedCalories, goalCalories }) => {
           {burnedCalories} kcal
         </ThemedText>
         <ThemedText style={styles.goalText}>Burned</ThemedText>
+        <ThemedText style={styles.netText}>{netCalories} kcal</ThemedText>
+        <ThemedText style={styles.goalText}>Net</ThemedText>
       </View>
     </View>
   );
@@ -81,6 +84,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   burnedText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  netText: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,

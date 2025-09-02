@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, ScrollView, TouchableOpacity, TextInput, Modal } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import DonutChart from '@/components/DonutChart';
@@ -15,6 +15,7 @@ export function TrackerScreen() {
   ]);
   const [burnedCalories, setBurnedCalories] = useState(300);
   const [waterIntake, setWaterIntake] = useState(4);
+  const [isMealModalVisible, setMealModalVisible] = useState(false);
 
   const goalCalories = 2000;
 
@@ -47,31 +48,54 @@ export function TrackerScreen() {
           goalCalories={goalCalories}
         />
 
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isMealModalVisible}
+          onRequestClose={() => {
+            setMealModalVisible(!isMealModalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <ThemedView style={styles.modalView}>
+              <ThemedText type="subtitle">Meals</ThemedText>
+              {meals.map((meal, index) => (
+                <View key={index} style={styles.mealContainer}>
+                  <View style={[styles.mealColorDot, { backgroundColor: meal.color }]} />
+                  <TextInput
+                    style={styles.mealInput}
+                    value={meal.name}
+                    onChangeText={(text) => handleMealChange(index, 'name', text)}
+                  />
+                  <TextInput
+                    style={styles.calorieInput}
+                    value={String(meal.calories)}
+                    keyboardType="numeric"
+                    onChangeText={(text) => handleMealChange(index, 'calories', Number(text))}
+                  />
+                  <ThemedText>kcal</ThemedText>
+                </View>
+              ))}
+              <TouchableOpacity style={styles.addButton} onPress={handleAddMeal}>
+                <ThemedText style={styles.addButtonText}>Add Meal</ThemedText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.addButton, styles.closeButton]}
+                onPress={() => setMealModalVisible(false)}
+              >
+                <ThemedText style={styles.addButtonText}>Close</ThemedText>
+              </TouchableOpacity>
+            </ThemedView>
+          </View>
+        </Modal>
+
         <View style={styles.section}>
-          <ThemedText type="subtitle">Meals</ThemedText>
-          {meals.map((meal, index) => (
-            <View key={index} style={styles.mealContainer}>
-              <View style={[styles.mealColorDot, { backgroundColor: meal.color }]} />
-              <TextInput
-                style={styles.mealInput}
-                value={meal.name}
-                onChangeText={(text) => handleMealChange(index, 'name', text)}
-              />
-              <TextInput
-                style={styles.calorieInput}
-                value={String(meal.calories)}
-                keyboardType="numeric"
-                onChangeText={(text) => handleMealChange(index, 'calories', Number(text))}
-              />
-              <ThemedText>kcal</ThemedText>
-            </View>
-          ))}
-          <TouchableOpacity style={styles.addButton} onPress={handleAddMeal}>
-            <ThemedText style={styles.addButtonText}>Add Meal</ThemedText>
+          <TouchableOpacity style={styles.manageButton} onPress={() => setMealModalVisible(true)}>
+            <ThemedText style={styles.manageButtonText}>Manage Meals</ThemedText>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.section}>
+        <View style={[styles.section, styles.inlineContainer]}>
           <ThemedText type="subtitle">Burned Calories</ThemedText>
           <View style={styles.burnedContainer}>
             <TextInput
@@ -84,7 +108,7 @@ export function TrackerScreen() {
           </View>
         </View>
 
-        <View style={styles.section}>
+        <View style={[styles.section, styles.waterSection]}>
           <ThemedText type="subtitle">Water Intake</ThemedText>
           <View style={styles.waterContainer}>
             <TouchableOpacity onPress={() => setWaterIntake(waterIntake > 0 ? waterIntake - 1 : 0)}>
@@ -97,12 +121,6 @@ export function TrackerScreen() {
           </View>
         </View>
 
-        <View style={styles.summarySection}>
-          <ThemedText type="subtitle">Total Calories</ThemedText>
-          <ThemedText>Consumed: {consumedCalories} kcal</ThemedText>
-          <ThemedText>Burned: {burnedCalories} kcal</ThemedText>
-          <ThemedText style={styles.netCalories}>Net: {consumedCalories - burnedCalories} kcal</ThemedText>
-        </View>
       </ScrollView>
     </ThemedView>
   );
@@ -118,6 +136,41 @@ const styles = StyleSheet.create({
   header: {
     textAlign: 'center',
     marginBottom: 20,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalView: {
+    margin: 20,
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: '90%',
+  },
+  closeButton: {
+    backgroundColor: '#6c757d',
+  },
+  manageButton: {
+    backgroundColor: '#4e9af1',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  inlineContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   section: {
     marginBottom: 30,
@@ -159,9 +212,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
+  manageButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   burnedContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  waterSection:{
+    borderTopWidth: 1,
+    borderColor: '#eee',
+    paddingTop: 20,
   },
   waterContainer: {
     flexDirection: 'row',
@@ -171,15 +234,5 @@ const styles = StyleSheet.create({
   },
   waterText: {
     fontSize: 18,
-  },
-  summarySection: {
-    marginTop: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderColor: '#eee',
-  },
-  netCalories: {
-    fontWeight: 'bold',
-    marginTop: 5,
   },
 });
