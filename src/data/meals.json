@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Grilled Chicken Salad",
+    "calories": 350,
+    "items": ["Chicken Breast", "Lettuce", "Tomatoes", "Cucumbers", "Olive Oil"],
+    "howto": "Grill the chicken breast, chop it, and mix with fresh vegetables. Drizzle with olive oil.",
+    "vitamins": "A, C, K",
+    "protein": "30g",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 2,
+    "name": "Salmon with Quinoa",
+    "calories": 450,
+    "items": ["Salmon fillet", "Quinoa", "Broccoli", "Lemon"],
+    "howto": "Bake the salmon with a slice of lemon on top. Serve with cooked quinoa and steamed broccoli.",
+    "vitamins": "D, B6, B12",
+    "protein": "40g",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 3,
+    "name": "Oatmeal with Berries",
+    "calories": 250,
+    "items": ["Oats", "Mixed Berries", "Almond Milk", "Honey"],
+    "howto": "Cook oats with almond milk. Top with mixed berries and a drizzle of honey.",
+    "vitamins": "C, K, Manganese",
+    "protein": "10g",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 4,
+    "name": "Avocado Toast with Egg",
+    "calories": 300,
+    "items": ["Whole wheat bread", "Avocado", "Egg", "Chilli flakes"],
+    "howto": "Toast the bread, mash avocado on top. Add a fried or poached egg and sprinkle with chilli flakes.",
+    "vitamins": "B, E, K",
+    "protein": "15g",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 5,
+    "name": "Lentil Soup",
+    "calories": 200,
+    "items": ["Lentils", "Carrots", "Celery", "Onion", "Vegetable Broth"],
+    "howto": "Sauté chopped vegetables, add lentils and broth. Simmer until lentils are soft.",
+    "vitamins": "A, B, Folate",
+    "protein": "12g",
+    "image": "https://via.placeholder.com/150"
+  },
+  {
+    "id": 6,
+    "name": "Greek Yogurt with Nuts",
+    "calories": 180,
+    "items": ["Greek Yogurt", "Walnuts", "Almonds", "Honey"],
+    "howto": "Combine Greek yogurt with a mix of walnuts and almonds. Drizzle with honey.",
+    "vitamins": "B12, Calcium",
+    "protein": "20g",
+    "image": "https://via.placeholder.com/150"
+  }
+]
